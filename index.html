@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio | Alfa Andriyatno</title>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --secondary: #0d9488;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --gray: #64748b;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--light); color: var(--dark); line-height: 1.6; }
+        
+        /* Header Navigation */
+        header { background: white; padding: 1rem 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100; }
+        .logo-container { display: flex; align-items: center; gap: 0.75rem; }
+        .header-avatar { width: 35px; height: 35px; border-radius: 50%; object-fit: cover; border: 2px solid var(--secondary); }
+        .logo { font-size: 1.1rem; font-weight: bold; color: var(--primary); }
+        nav a { margin-left: 1.5rem; text-decoration: none; color: var(--dark); font-weight: 500; transition: color 0.3s; }
+        nav a:hover { color: var(--secondary); }
+        
+        /* Hero Section */
+        .hero { padding: 4rem 5%; background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%); color: white; }
+        .hero-container { max-width: 900px; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 2.5rem; flex-wrap: wrap; text-align: left; }
+        .profile-img { width: 170px; height: 170px; border-radius: 50%; object-fit: cover; border: 4px solid var(--secondary); box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        .hero-text { flex: 1; min-width: 280px; }
+        .hero h1 { font-size: 2.3rem; margin-bottom: 0.5rem; }
+        .hero p { font-size: 1.1rem; color: #cbd5e1; margin-bottom: 1.5rem; }
+        .btn { display: inline-block; padding: 0.75rem 1.5rem; background: var(--secondary); color: white; border-radius: 6px; text-decoration: none; font-weight: bold; transition: background 0.3s; }
+        .btn:hover { background: #0f766e; }
+        
+        /* General Section */
+        section { padding: 4rem 5%; max-width: 1100px; margin: 0 auto; }
+        h2 { font-size: 1.8rem; color: var(--primary); margin-bottom: 1.5rem; border-bottom: 3px solid var(--secondary); display: inline-block; padding-bottom: 0.3rem; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1rem; }
+        
+        /* Card Styling */
+        .card { background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border-top: 4px solid var(--primary); display: flex; flex-direction: column; }
+        .card h3 { color: var(--dark); margin-bottom: 0.5rem; font-size: 1.2rem; }
+        
+        /* Certification Images */
+        .cert-img { width: 100%; height: 180px; object-fit: cover; border-radius: 6px; margin-bottom: 1rem; border: 1px solid #e2e8f0; transition: transform 0.3s; }
+        .cert-img:hover { transform: scale(1.02); }
+        
+        .tags span { display: inline-block; background: #e2e8f0; color: var(--dark); font-size: 0.8rem; padding: 0.2rem 0.6rem; border-radius: 4px; margin-right: 0.3rem; margin-top: 0.5rem; }
+        ul { list-style-position: inside; color: var(--gray); }
+        footer { text-align: center; padding: 2rem; background: var(--dark); color: var(--gray); font-size: 0.9rem; }
+
+        @media (max-width: 768px) {
+            .hero-container { text-align: center; flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header>
+        <div class="logo-container">
+            <!-- Ganti 'foto-profil.jpg' dengan nama berkas foto Anda -->
+            <img src="FOTO.PNG" alt="Foto Profil" class="header-avatar">
+            <div class="logo">Alfa Andriyatno, S.Ak</div>
+        </div>
+        <nav>
+            <a href="#about">Tentang</a>
+            <a href="#skills">Keahlian</a>
+            <a href="#Pengalaman">Pengalaman</a>
+            <a href="#projects">Proyek</a>
+            <a href="#Organisasi">Organisasi</a>
+            <a href="#certifications">Sertifikasi</a>
+            <a href="#contact">Kontak</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section / Header Utama -->
+    <section class="hero">
+        <div class="hero-container">
+            <!-- Ganti 'foto-profil.jpg' dengan berkas foto formal Anda -->
+            <img src="FOTO.PNG" alt="Alfa Andriyatno" class="profile-img">
+            <div class="hero-text">
+                <h1>Alfa Andriyatno</h1>
+                <p>Accounting Graduate | Accounting, Finance & Tax </p>
+                <a href="#contact" class="btn">Hubungi Saya</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tentang Saya -->
+    <section id="about">
+        <h2>Tentang Saya</h2>
+        <p>Lulusan akuntansi Universitas Siliwangi dengan pengalaman bekerja selama 1 tahun sebagai Accounting Staff di PT Bharata Internasional Pharmaceutical. Menguasai Microsoft Office (Word, Excel, PowerPoint) dan keterampilan software akuntansi Accurate. Memiliki pengalaman dalam penyusunan laporan keuangan dan analisis data menggunakan Excel (Pivot Table). Mampu berkomunikasi secara efektif dan bekerja sama dalam tim dengan baik serta berkomitmen tinggi dalam meningkatkan efisiensi laporan keuangan dan mendukung pengambilan keputusan berbasis data.</p>
+    </section>
+
+    <!-- Keahlian -->
+    <section id="skills">
+        <h2>Keahlian Utama</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>Akuntansi & Keuangan</h3>
+                <ul>
+                    <li>Penyusunan Laporan Keuangan (PSAK)</li>
+                    <li>Analisis Rasio Keuangan</li>
+                    <li>Rekonsiliasi Bank</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>Perpajakan</h3>
+                <ul>
+                    <li>Pencatatan PPh 21, 23, PPN</li>
+                    <li>Pengisian e-SPT & e-Faktur</li>
+                    <li>Pemeriksaan Bukti Transaksi</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>Software & Alat</h3>
+                <div class="tags">
+                    <span>Microsoft Excel (Advanced)</span>
+                    <span>Microsoft Word (Advanced)</span>
+                    <span>Microsoft PowerPoint (Advanced)</span>
+                    <span>Accurate</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pengalaman Bekerja & Magang -->
+    <section id="Pengalaman">
+        <h2>Pengalaman Bekerja & Magang</h2>
+        <div class="grid">
+            <div class="card">
+                <h9>PT Bharata Internasional Pharmaceutical - Accounting Staff</h9>
+                <ul>
+                    <li>Bertanggung jawab atas keuangan dan laporan keuangan 7 CV mitra bisnis</li>
+                    <li>Bertanggung jawab atas seluruh transaksi uang masuk dan uang keluar pada rekening CV</li>
+                    <li>Melakukan pembukuan yang akurat dan tepat waktu atas seluruh transaksi keuangan maupun transaksi material lainnya</li>
+                    <li>Membuat laporan keuangan CV bulanan dan tahunan secara tepat waktu</li>
+                    <li>Menghitung omzet dari transaksi penarikan uang masuk marketplace</li>
+                    <li>Menghitung kuantitas penjualan produk dari seluruh transaksi penarikan uang masuk marketplace</li>
+                    <li>Mengarsipkan dokumen transaksi secara rapi dan terstruktur</li>
+                    <li>Membuat laporan keuangan untuk pajak PT secara bulanan dan tahunan</li>
+                    <li>Lapor SPT tahunan pajak CV</li>
+                </ul>
+                <div class="tags"><span>Bekerja</span><span>09 Juni 2025 - Sekarang</span></div>
+            </div>
+            <div class="card">
+                <h3>PUSKESMAS Majenang 1 - Staff Keuangan</h3>
+                <ul>
+                    <li>Membuat SPP (Surat Permintaan Pembayaran), SPM (Surat Perintah Membayar), dan SP2D (Surat Perintah Pencairan Dana)</li>
+                    <li>Membuat berita acara penerimaan, pemeriksaan, dan serah terima barang</li>
+                    <li>Membantu dalam pembuatan LAT (Laporan Akhir Tahun) untuk keperluan tutup buku tahun 2023</li>
+                </ul>
+                <div class="tags"><span>Magang</span><span>02 Januari 2024 - 02 Februari 2024</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Proyek & Portofolio -->
+    <section id="projects">
+        <h3>Portofolio & Studi Kasus</h3>
+        <div class="grid">
+            <div class="card">
+                <h3>Penyusunan Laporan Keuangan</h3>
+                <p>Melakukan evaluasi dan penyusunan laporan keuangan untuk kebutuhan perusahaan dan pelaporan perpajakan.</p>
+                <div class="tags"><span>Financial Reporting</span><span>Excel</span></div>
+            </div>
+            <div class="card">
+                <h3>Analisis Kinerja Keuangan</h3>
+                <p>Membuat analisis tren keuangan tahunan menggunakan rasio likuiditas, profitabilitas, dan solvabilitas.</p>
+                <div class="tags"><span>Financial Analysis</span><span>Excel</span></div>
+            </div>
+            <div class="card">
+                <h3>Point of Sale untuk UMKM</h3>
+                <p>Membuat situs web untuk memproses transaksi jual beli, mencatat laporan penjualan, serta mengelola stok barang secara otomatis.</p>
+                <p>Link web Point of Sale yang dapat digunakan oleh umum: <a href="https://kasir-umkm-sigma.vercel.app/" target="blank">https://kasir-umkm-sigma.vercel.app/</a></p>
+                <p>Panduan penggunaan web Point of Sale: <a href="https://drive.google.com/file/d/1pg-sLEG4OUvXPaiRWcvqLWf7voihDn1v/view?usp=drive_link" target="blank">Panduan Penggunaan</a></p>
+                <div class="tags"><span>Point of Sale</span><span>Website</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pengalaman Organisasi -->
+    <section id="Organisasi">
+        <h2>Pengalaman Organisasi</h2>
+        <div class="grid">
+            <div class="card">
+                <h2>UKM Kreativitas Ilmiah Mahasiswa - Departemen Ekonomi dan Bisnis</h2>
+                <ul>
+                    <li>Menjadi panitia divisi hubungan masyarakat dalam kegiatan Pekan Ilmiah UKM KIM</li>
+                    <li>Mengikuti kegiatan UKM dan departemen</li>
+                </ul>
+                <div class="tags"><span>UKM</span><span>01 Januari 2024 - 31 Desember 2024</span></div>
+            </div>
+            <div class="card">
+                <h2>Komunitas Cendekiawan Kreatif - Anggota Divisi Human Resources</h2>
+                <ul>
+                    <li>Mengatur dan mengelola absensi komunitas</li>
+                    <li>Menjadi panitia pada kegiatan Mini Paper Training untuk mahasiswa baru akuntansi</li>
+                </ul>
+                <div class="tags"><span>Komunitas</span><span>02 September 2021 - 01 September 2022</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sertifikasi & Pelatihan dengan Foto -->
+    <section id="certifications">
+        <h3>Sertifikasi & Pelatihan</h6>
+        <div class="grid">
+            <div class="card">
+                <!-- Ganti 'sertifikat-brevet.jpg' dengan nama berkas sertifikat Anda -->
+                <img src="BREVET.PNG" alt="Sertifikat Brevet Pajak A & B" class="cert-img">
+                <h3>Brevet Pajak A & B</h3>
+                <p>Penyelenggara: Bina Muda Inspira | 2025</p>
+            </div>
+            <div class="card">
+                <!-- Ganti 'sertifikat-excel.jpg' dengan nama berkas sertifikat Anda -->
+                <img src="CFTR.PNG" alt="Certified Fundamental Tax Reporting" class="cert-img">
+                <h3>Certified Fundamental Tax Reporting</h3>
+                <p>Penyelenggara: Perhimpunan Profesional Pelaporan Perpajakan Muda Indonesia | 2025</p>
+            </div>
+            <div class="card">
+                <!-- Ganti 'sertifikat-excel.jpg' dengan nama berkas sertifikat Anda -->
+                <img src="ESSAY.PNG" alt="Juara 3 Essay Competition" class="cert-img">
+                <h3>Juara 3 Essay Competition</h3>
+                <p>Penyelenggara: BEM FEB Universitas Siliwangi | 2023</p>
+            </div>
+            <div class="card">
+                <!-- Ganti 'sertifikat-excel.jpg' dengan nama berkas sertifikat Anda -->
+                <img src="ANTI KORUPSI.PNG" alt="E-Learning Anti Korupsi" class="cert-img">
+                <h3>E-Learning Anti Korupsi</h3>
+                <p>Penyelenggara: Komisi Pemberantas Korupsi | 2022</p>
+            </div>
+            <div class="card">
+                <!-- Ganti 'sertifikat-excel.jpg' dengan nama berkas sertifikat Anda -->
+                <img src="TELP.PNG" alt="Test of English Language Proficiency" class="cert-img">
+                <h3>Test of English Language Proficiency</h3>
+                <p>Penyelenggara: Siliwangi University Language Centre | 2024</p>
+            </div>
+            <div class="card">
+                <!-- Ganti 'sertifikat-excel.jpg' dengan nama berkas sertifikat Anda -->
+                <img src="DATA ANALIS.PNG" alt="Intro to Data Analytics" class="cert-img">
+                <h3>Intro to Data Analytics</h3>
+                <p>Penyelenggara: PT Revolusi Cita Edukasi | 2024</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Kontak -->
+    <section id="contact">
+        <h2>Kontak</h2>
+        <p>Silakan hubungi saya untuk diskusi peluang kerja atau kolaborasi.</p>
+        <p style="margin-top: 1rem;">
+            <strong>Email:</strong> <a href="mailto:alfaandriyatno17@gmail.com">alfaandriyatno17@gmail.com</a><br>
+            <strong>Telepon:</strong> 082134714600<br>
+            <strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/alfa-andriyatno-4489bb276?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="blank">linkedin.com/in/alfa-andriyatno</a><br>
+            <strong>Curriculum Vitae:</strong> <a href="https://drive.google.com/file/d/19cdsTP6laOHtP07W1P_LEIj5Bkt3E5PP/view?usp=drive_link" target="blank">CV Alfa Andriyatno</a><br>
+            <strong>Lokasi:</strong> Cilacap, Indonesia
+        </p>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Alfa Andriyatno. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
