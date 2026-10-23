@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Dashboard Pengunjung</title>
+<style>
+  :root { --primary:#1e3a8a; --secondary:#0d9488; --dark:#0f172a; --light:#f8fafc; --gray:#64748b; }
+  * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; }
+  body { background:var(--light); color:var(--dark); padding:1.5rem 5%; }
+  h1 { color:var(--primary); margin-bottom:1rem; }
+  .login { max-width:360px; margin:15vh auto; background:#fff; padding:2rem; border-radius:8px; box-shadow:0 4px 10px rgba(0,0,0,.08); border-top:4px solid var(--primary); }
+  input { width:100%; padding:.7rem; margin:.8rem 0; border:1px solid #cbd5e1; border-radius:6px; }
+  button { padding:.65rem 1.2rem; background:var(--secondary); color:#fff; border:0; border-radius:6px; font-weight:bold; cursor:pointer; }
+  button:hover { background:#0f766e; }
+  .err { color:#b91c1c; font-size:.9rem; min-height:1.2rem; }
+  .stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:1rem; margin-bottom:1.5rem; }
+  .stat { background:#fff; padding:1rem; border-radius:8px; border-top:4px solid var(--secondary); box-shadow:0 2px 6px rgba(0,0,0,.06); }
+  .stat b { display:block; font-size:1.6rem; color:var(--primary); }
+  .stat span { color:var(--gray); font-size:.85rem; }
+  .bar { display:flex; gap:.6rem; align-items:center; margin-bottom:1rem; flex-wrap:wrap; }
+  .bar input { width:260px; margin:0; }
+  .wrap { overflow-x:auto; background:#fff; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,.06); }
+  table { border-collapse:collapse; width:100%; font-size:.85rem; }
+  th, td { padding:.6rem .8rem; text-align:left; border-bottom:1px solid #e2e8f0; white-space:nowrap; }
+  th { background:#f1f5f9; color:var(--primary); position:sticky; top:0; }
+  .hidden { display:none; }
+</style>
+</head>
+<body>
+
+<div id="login" class="login">
+  <h1>Dashboard Pengunjung</h1>
+  <p>Masukkan password admin.</p>
+  <input type="password" id="pass" placeholder="Password" autocomplete="current-password">
+  <div class="err" id="err"></div>
+  <button id="btnLogin">Masuk</button>
+</div>
+
+<div id="app" class="hidden">
+  <h1>Pengunjung Portofolio</h1>
+  <div class="stats">
+    <div class="stat"><b id="sTotal">0</b><span>Total kunjungan</span></div>
+    <div class="stat"><b id="sUnique">0</b><span>Pengunjung unik</span></div>
+    <div class="stat"><b id="sToday">0</b><span>Kunjungan hari ini</span></div>
+    <div class="stat"><b id="sMobile">0%</b><span>Via ponsel</span></div>
+    <div class="stat"><b id="sCountry">-</b><span>Negara teratas</span></div>
+  </div>
+  <div class="bar">
+    <input type="search" id="q" placeholder="Cari kota, negara, perangkat, sumber...">
+    <button id="btnRefresh">Muat ulang</button>
+    <button id="btnLogout" style="background:#64748b">Keluar</button>
+  </div>
+  <div class="wrap">
+    <table>
+      <thead><tr><th>Waktu</th><th>Kota</th><th>Negara</th><th>Perangkat</th><th>Browser</th><th>Sumber</th><th>Bahasa</th><th>Layar</th><th>IP</th><th>ISP</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+const SB_URL = 'https://feismpowmuqrktpodhjs.supabase.co';
+const SB_KEY = 'sb_publishable_dcXTX_PjRklnEmDwUJ_XRQ_IA3z6tot';
+let DATA = [];
+const $ = id => document.getElementById(id);
+
+function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function browser(ua){
+  ua = ua || '';
+  if (/Edg\//.test(ua)) return 'Edge';
+  if (/OPR\/|Opera/.test(ua)) return 'Opera';
+  if (/Chrome\//.test(ua)) return 'Chrome';
+  if (/Firefox\//.test(ua)) return 'Firefox';
+  if (/Safari\//.test(ua)) return 'Safari';
+  return '-';
+}
+function source(ref){
+  if (!ref) return 'Langsung';
+  try { return new URL(ref).hostname; } catch(e){ return ref; }
+}
+
+async function load(pass){
+  const r = await fetch(SB_URL + '/rest/v1/rpc/get_portfolio_visits', {
+    method:'POST',
+    headers:{ 'apikey':SB_KEY, 'Authorization':'Bearer '+SB_KEY, 'Content-Type':'application/json' },
+    body: JSON.stringify({ p_pass: pass, p_limit: 5000 })
+  });
+  if (!r.ok) throw new Error(r.status === 400 || r.status === 401 || r.status === 403 ? 'Password salah' : 'Gagal memuat data');
+  return r.json();
+}
+
+function render(){
+  const q = $('q').value.trim().toLowerCase();
+  const list = DATA.filter(d => !q || [d.city,d.country,d.device,d.referrer,d.user_agent,d.ip,d.isp].join(' ').toLowerCase().includes(q));
+  $('rows').innerHTML = list.map(d => '<tr>' +
+    '<td>' + esc(new Date(d.created_at).toLocaleString('id-ID')) + '</td>' +
+    '<td>' + esc(d.city || '-') + '</td>' +
+    '<td>' + esc(d.country || '-') + '</td>' +
+    '<td>' + esc(d.device || '-') + '</td>' +
+    '<td>' + esc(browser(d.user_agent)) + '</td>' +
+    '<td>' + esc(source(d.referrer)) + '</td>' +
+    '<td>' + esc(d.language || '-') + '</td>' +
+    '<td>' + esc(d.screen || '-') + '</td>' +
+    '<td>' + esc(d.ip || '-') + '</td>' +
+    '<td>' + esc(d.isp || '-') + '</td></tr>').join('');
+}
+
+function stats(){
+  $('sTotal').textContent = DATA.length;
+  $('sUnique').textContent = new Set(DATA.map(d => d.visitor_id || d.ip || d.id)).size;
+  const today = new Date().toDateString();
+  $('sToday').textContent = DATA.filter(d => new Date(d.created_at).toDateString() === today).length;
+  const m = DATA.filter(d => d.device === 'Mobile').length;
+  $('sMobile').textContent = DATA.length ? Math.round(m / DATA.length * 100) + '%' : '0%';
+  const c = {};
+  DATA.forEach(d => { if (d.country) c[d.country] = (c[d.country] || 0) + 1; });
+  const top = Object.entries(c).sort((a,b) => b[1]-a[1])[0];
+  $('sCountry').textContent = top ? top[0] + ' (' + top[1] + ')' : '-';
+}
+
+async function enter(pass, remember){
+  $('err').textContent = '';
+  try {
+    DATA = await load(pass);
+  } catch(e){
+    $('err').textContent = e.message;
+    try { sessionStorage.removeItem('pv_admin'); } catch(_){}
+    return false;
+  }
+  if (remember) { try { sessionStorage.setItem('pv_admin', pass); } catch(_){} }
+  $('login').classList.add('hidden');
+  $('app').classList.remove('hidden');
+  stats(); render();
+  return true;
+}
+
+$('btnLogin').onclick = () => enter($('pass').value, true);
+$('pass').addEventListener('keydown', e => { if (e.key === 'Enter') $('btnLogin').click(); });
+$('q').addEventListener('input', render);
+$('btnRefresh').onclick = async () => {
+  let p = ''; try { p = sessionStorage.getItem('pv_admin') || ''; } catch(_){}
+  if (p) { DATA = await load(p); stats(); render(); }
+};
+$('btnLogout').onclick = () => { try { sessionStorage.removeItem('pv_admin'); } catch(_){} location.reload(); };
+
+try { const p = sessionStorage.getItem('pv_admin'); if (p) enter(p, false); } catch(_){}
+</script>
+</body>
+</html>
