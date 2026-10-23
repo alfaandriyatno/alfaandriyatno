@@ -289,5 +289,74 @@
         <p>&copy; 2026 Alfa Andriyatno. All rights reserved.</p>
     </footer>
 
+    <!-- Pencatat pengunjung (data tersimpan di Supabase, lihat lewat visitor-admin.html) -->
+    <script>
+    (function () {
+        var SB_URL = 'https://feismpowmuqrktpodhjs.supabase.co';
+        var SB_KEY = 'sb_publishable_dcXTX_PjRklnEmDwUJ_XRQ_IA3z6tot';
+        try {
+            // Hindari hitung ganda: 1 kunjungan per sesi tab
+            if (sessionStorage.getItem('pv_logged')) return;
+            sessionStorage.setItem('pv_logged', '1');
+        } catch (e) {}
+
+        var vid;
+        try {
+            vid = localStorage.getItem('pv_vid');
+            if (!vid) {
+                vid = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(16).slice(2);
+                localStorage.setItem('pv_vid', vid);
+            }
+        } catch (e) { vid = null; }
+
+        var ua = navigator.userAgent || '';
+        var device = /Mobi|Android|iPhone|iPad/i.test(ua) ? 'Mobile' : 'Desktop';
+
+        function send(geo) {
+            geo = geo || {};
+            var body = {
+                visitor_id: vid,
+                path: location.pathname + location.hash,
+                referrer: (document.referrer || '').slice(0, 500),
+                user_agent: ua.slice(0, 500),
+                device: device,
+                language: navigator.language || null,
+                screen: screen.width + 'x' + screen.height,
+                timezone: (Intl.DateTimeFormat().resolvedOptions().timeZone) || null,
+                ip: geo.ip || null,
+                country: geo.country || null,
+                region: geo.region || null,
+                city: geo.city || null,
+                isp: geo.isp || null
+            };
+            fetch(SB_URL + '/rest/v1/portfolio_visits', {
+                method: 'POST',
+                headers: {
+                    'apikey': SB_KEY,
+                    'Authorization': 'Bearer ' + SB_KEY,
+                    'Content-Type': 'application/json',
+                    'Prefer': 'return=minimal'
+                },
+                body: JSON.stringify(body),
+                keepalive: true
+            }).catch(function () {});
+        }
+
+        // Ambil perkiraan lokasi dari IP; jika gagal, tetap catat kunjungan
+        var done = false;
+        function once(g) { if (done) return; done = true; send(g); }
+        setTimeout(function () { once(null); }, 3000);
+        fetch('https://ipwho.is/')
+            .then(function (r) { return r.json(); })
+            .then(function (d) {
+                once(d && d.success !== false ? {
+                    ip: d.ip, country: d.country, region: d.region, city: d.city,
+                    isp: d.connection && d.connection.isp
+                } : null);
+            })
+            .catch(function () { once(null); });
+    })();
+    </script>
+
 </body>
 </html>
